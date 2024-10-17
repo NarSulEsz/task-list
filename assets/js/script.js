@@ -79,6 +79,7 @@ console.log('ADD', task);
   
   taskList.push(task);
   localStorage.setItem('tasks', JSON.stringify(taskList));
+  renderTaskList();
 }
 
 

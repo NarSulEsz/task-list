@@ -29,12 +29,25 @@ const descriptionEl=$("<div>").text(task.description);
  taskCardEl.attr('data-id', task.id)
 
 // set card background color based on due date
-  if (today.isAfter(isDue)) taskCardEl.addClass('bg-danger');
-  if (today.isSame(isDue)) taskCardEl.addClass('bg-warning', 'text-light');
+if (today.isAfter(isDue)) {
+  taskCardEl.addClass('bg-danger'); // Overdue
+} else if (today.isSame(isDue)) {
+  taskCardEl.addClass('bg-warning text-light'); // Due today
+} else if (isDue.diff(today, 'day') <= 1) {
+  taskCardEl.addClass('bg-warning text-light'); // Nearing deadline (within 1 day)
+}
   
   // append card elements
-  $('#todo-cards').append(taskCardEl);
-  taskCardEl.append(titleEl, dueDateEl, descriptionEl);
+ // append card elements
+ taskCardEl.append(titleEl, dueDateEl, descriptionEl, deleteBtn);
+
+ // append to the appropriate column based on status
+ $(`#${task.status}-cards`).append(taskCardEl);
+
+ // add event listener for delete button
+ deleteBtn.on('click', function() {
+   handleDeleteTask(task.id); // Pass the task ID to the delete handler
+ });
 }
 
 // TODO: create a function to render the task list and make cards draggable

@@ -101,10 +101,13 @@ console.log('ADD', task);
 
 
 // TODO: create a function to handle deleting a task
-function handleDeleteTask(event) {
-  // get the task id from the button clicked
-
-  // remove the task from the taskList, save and render
+function handleDeleteTask(taskId) {
+  // Remove the task from the taskList
+  taskList = taskList.filter(task => task.id !== taskId);
+  // Save the updated taskList to localStorage
+  localStorage.setItem('tasks', JSON.stringify(taskList));
+  // Re-render the task list
+  renderTaskList();
 }
 
 

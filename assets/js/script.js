@@ -39,21 +39,24 @@ const descriptionEl=$("<div>").text(task.description);
 
 // TODO: create a function to render the task list and make cards draggable
 function renderTaskList() {
-  // if taskList is null, set it to an empty array
-
-  // empty existing task cards
-$('.lane.card-body > *').empty();
+    // empty existing task cards
+$('.lane.card-body').empty();
   // loop through tasks and create task cards for each status
 for (let task of taskList) {
   createTaskCard(task);
 }
   
 // make task cards draggable
-  $( function() {
-    $( ".task.card" ).draggable({
+      $( ".task.card" ).draggable({
     zIndex: 1,
-    })
-  } );
+    revert: "invalid", // Optional: revert back if not dropped in a valid lane
+    start: function(event, ui)  {
+      $(this).addClass("dragging"); // Optional: add a class for styling while dragging
+    },
+    stop: function(event, ui) {
+      $(this).removeClass("dragging"); // Remove class after dragging
+    }
+      });
 }
 
 // TODO: create a function to handle adding a new task
